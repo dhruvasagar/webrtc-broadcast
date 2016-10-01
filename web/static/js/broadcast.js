@@ -33,6 +33,9 @@ $(document).ready(function() {
     if (success === false) {
       alert("Broadcast unsuccessful, please try a different room name.")
     } else {
+      var url = window.location.host + '/' + name
+      $(roomDetails).html("Share the url with ur listeners: <a href=" + url + ">" + url + "</a>")
+
       broadcastButton.disabled = true
       hangUpButton.disabled = false
 
@@ -266,11 +269,13 @@ $(document).ready(function() {
   if (isBroadcaster) {
     // Broadcastor
     var roomNameInput = document.querySelector('#room-name'),
-        broadcastButton = document.querySelector('#broadcast')
+        broadcastButton = document.querySelector('#broadcast'),
+        roomDetails = document.querySelector('#room-details')
 
     broadcastButton.addEventListener('click', (event) => {
       name = roomNameInput.value
       channelName = name
+      window.roomName = name
 
       if (name.length > 0) {
         chan = socket.channel("webrtc:client-"+channelName, {})
