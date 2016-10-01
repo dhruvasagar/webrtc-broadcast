@@ -81,7 +81,7 @@ $(document).ready(function() {
     yourConnection.addIceCandidate(new RTCIceCandidate(candidate))
   }
 
-  function onPeerCandidate(candidate) {
+  function onPeerCandidate(candidate, name) {
     var connection = connections[name]
     connection.addIceCandidate(new RTCIceCandidate(candidate))
   }
@@ -92,7 +92,7 @@ $(document).ready(function() {
     yourConnection.onaddstream = null
   }
 
-  function onPeerLeave() {
+  function onPeerLeave(name) {
     var connection = connections[name]
     connection.close()
     connection.onicecandidate = null
