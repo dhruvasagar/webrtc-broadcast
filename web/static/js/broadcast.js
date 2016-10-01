@@ -108,6 +108,10 @@ $(document).ready(function() {
     }
   }
 
+  function stopStream() {
+    stream.getAudioTracks().forEach((track) => track.stop())
+  }
+
   function hasUserMedia() {
     return !!navigator.mediaDevices.getUserMedia
   }
@@ -247,6 +251,7 @@ $(document).ready(function() {
 
     if (isBroadcaster) {
       closeAllPeers()
+      stopStream()
     }
 
     if (broadcastButton) {
