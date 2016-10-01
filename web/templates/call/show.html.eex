@@ -1,0 +1,10 @@
+<div id="call-page" class="page">
+  <h2>Welcome to Room : <%= @name %></h2>
+  <audio id="theirs" autoplay></audio>
+  <button id="join">Join Broadcast</button>
+  <button id="hangup">Stop Spectating</button>
+</div>
+
+<script>
+  window.roomName = "<%= @name %>";
+</script>

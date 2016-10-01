@@ -1,0 +1,6 @@
+<div id="main-page" class="page">
+  <h2>Create Room and Broadcast</h2>
+  <input type="text" id="room-name" value="<%= @name %>" placeholder="Room name" />
+  <button id="broadcast">Broadcast</button>
+  <button id="hangup">Stop Broadcast</button>
+</div>
