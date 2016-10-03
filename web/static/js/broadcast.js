@@ -34,7 +34,7 @@ $(document).ready(function() {
       alert("Broadcast unsuccessful, please try a different room name.")
     } else {
       var url = window.location.host + '/' + name
-      $(roomDetails).html("Share the url with ur listeners: <a href=" + url + ">" + url + "</a>")
+      $(roomDetails).html("Share the url with ur listeners: <a href=//" + url + ">" + url + "</a>")
 
       broadcastButton.disabled = true
       hangUpButton.disabled = false
