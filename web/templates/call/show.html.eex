@@ -2,7 +2,7 @@
   <h2>Welcome to Room : <%= @name %></h2>
   <audio id="theirs" autoplay></audio>
   <button id="join">Join Broadcast</button>
-  <button id="hangup">Stop Spectating</button>
+  <button id="hangup" disabled>Stop Spectating</button>
 </div>
 
 <script>
