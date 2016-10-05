@@ -143,7 +143,6 @@ function stopStream() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('wtf?')
   if (window.roomName) {
     return
   }
