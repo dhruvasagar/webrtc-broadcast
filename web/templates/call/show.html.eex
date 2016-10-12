@@ -1,10 +1,10 @@
-<div id="call-page" class="page">
-  <h2>Welcome to Room : <%= @name %></h2>
-  <audio id="theirs" autoplay></audio>
+<div id="listeners-page" class="page">
+  <h2>Meeting - Listener</h2>
+  <div id="other-streams"></div>
   <button id="join">Join Broadcast</button>
   <button id="hangup" disabled>Stop Spectating</button>
 </div>
 
-<script>
-  window.roomName = "<%= @name %>";
+<script type="text/javascript" charset="utf-8">
+  window.isListener = true
 </script>

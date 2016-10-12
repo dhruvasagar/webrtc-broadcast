@@ -1,7 +1,6 @@
 <div id="main-page" class="page">
-  <h2>Create Room and Broadcast</h2>
-  <div id="room-details"></div>
-  <input type="text" id="room-name" value="<%= @name %>" placeholder="Room name" />
-  <button id="broadcast" disabled>Broadcast</button>
-  <button id="hangup" disabled>Stop Broadcast</button>
+  <h2>Meeting - Host</h2>
+  <div id="other-streams"></diV>
+  <button id="join">Join Meeting</button>
+  <button id="hangup" disabled>Hang Up</button>
 </div>

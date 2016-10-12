@@ -7,7 +7,7 @@ defmodule Broadcastr.CallChannel do
     Logger.debug "join: name: #{name}, params: #{inspect params}"
     case State.get(name) do
       nil ->
-        State.put name, %{}
+        State.put name, %{isListener: params["isListener"]}
         {:ok, socket}
       data ->
         Logger.error "join error: data: #{inspect data}"
@@ -20,13 +20,34 @@ defmodule Broadcastr.CallChannel do
     {:reply, {:ok, msg}, socket}
   end
 
-  def handle_in("client:webrtc-" <> nm, %{"type" => "stream-request", "name" => name} = msg, socket) do
-    Logger.debug "Initiation requested by #{nm} to #{name}"
-    case State.get nm do
+  def handle_in("client:webrtc-" <> name, %{"type" => "stream-ready"} = msg, socket) do
+    Logger.debug "stream-ready by #{name}"
+    case State.get(name) do
       nil ->
         {:error, socket}
       data ->
-        do_broadcast name, "stream-request", %{type: "initiate", name: nm}
+        newMember = %{name: name}
+        case State.get("members") do
+          nil ->
+            State.put "members", [newMember]
+          data ->
+            do_broadcast name, "stream-ready", %{members: data}
+            State.put "members", data ++ [newMember]
+        end
+    end
+    {:noreply, socket}
+  end
+
+  def handle_in("client:webrtc-" <> name, %{"type" => "stream-request"} = msg, socket) do
+    Logger.debug "Initiation requested by #{name}"
+    case State.get name do
+      nil ->
+        {:error, socket}
+      data ->
+        Enum.each(State.get("members"), fn(member) ->
+          %{name: nm} = member
+          do_broadcast nm, "stream-ready", %{name: name}
+        end)
     end
     {:noreply, socket}
   end
@@ -57,12 +78,15 @@ defmodule Broadcastr.CallChannel do
     {:noreply, socket}
   end
 
-  def handle_in("client:webrtc-" <> nm, %{"type" => "leave", "name" => name} = msg, socket) do
-    Logger.debug "Disconnecting from  #{name} by #{nm}"
-    case State.get nm do
+  def handle_in("client:webrtc-" <> name, %{"type" => "leave"} = msg, socket) do
+    Logger.debug "Disconnecting from  #{name}"
+    case State.get name do
       nil -> :ok
       data -> 
-        do_broadcast name, "leave", %{type: "leave", name: nm}
+        State.delete(name)
+        Enum.each(data, fn(nm) ->
+          do_broadcast nm, "leave", %{name: name}
+        end)
     end
     {:noreply, socket}
   end

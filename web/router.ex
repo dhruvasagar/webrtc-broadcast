@@ -17,7 +17,7 @@ defmodule Broadcastr.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", CallController, :index
-    get "/:name", CallController, :show
+    get "/radio", CallController, :show
   end
 
   # Other scopes may use custom stacks.
